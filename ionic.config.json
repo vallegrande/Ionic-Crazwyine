@@ -1,0 +1,7 @@
+{
+  "name": "Carzywine",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
