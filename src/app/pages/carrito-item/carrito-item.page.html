@@ -1,0 +1,27 @@
+  <div class="cart-item">
+
+    <div class="image">
+      <ion-img id="imgPD" src="assets/imgpd/{{item.idPro}}.png"></ion-img>
+    </div>
+
+    <div class="description">
+      <h3>{{item.nomPro}}</h3>
+      <p><sup>$</sup>{{item.precPro}}</p>
+    </div>
+
+    <div class="actions">
+      <ion-buttons>
+        <ion-button (click)="incrementar.emit()">
+          <ion-icon slot="start" name="add"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      
+      <div class="counter">{{item.canproElegido}}</div>
+      <ion-buttons>
+        <ion-button (click)="decrementar.emit()">
+          <ion-icon slot="start" name="remove"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </div>
+
+  </div>

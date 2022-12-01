@@ -1,0 +1,139 @@
+<ion-app>
+    <p-toast></p-toast>
+
+    <ion-toolbar>
+        <ion-title> Empleados </ion-title>
+        <ion-button slot="start">
+            <ion-menu-button menu="main-menu"></ion-menu-button>
+        </ion-button>
+    </ion-toolbar>
+
+
+    <ion-content>
+
+        <div class="card">
+
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2"
+                        (click)="openNew()"></button>
+                </ng-template>
+
+                <ng-template pTemplate="right">
+                </ng-template>
+            </p-toolbar>
+
+
+
+            <!--    Form Mostrar Lista Empleado       -->
+
+
+
+            <p-table #dt [value]="empleados" [rows]="5" [paginator]="true" class="dt"
+            responsiveLayout="scroll" [rowHover]="true" [filterDelay]="0"
+            [globalFilterFields]="['nomPer','apePer','dniPer','corPer','celPer']" 
+            currentPageReportTemplate=" {first} al {last} de {totalRecords} " [showCurrentPageReport]="true">
+
+                <ng-template pTemplate="caption" class="flex align-items-center ">
+                    <div class="flex align-items-center ">
+                        <h5 class="m-0">Lista Empleados</h5>
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text"
+                            (input)="applyFilterGlobal($event, 'contains')"
+                             placeholder="Search..." />
+                        </span>
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="nombre">Nombre </th>
+                        <th pSortableColumn="apellido">Apellido </th>
+                        <th pSortableColumn="celular">Celular</th>
+                        <th pSortableColumn="correo">Correo </th>
+                        <th pSortableColumn="dni">DNI</th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-empleado>
+                    <tr>
+                        <td>{{empleado.nomPer}}</td>
+                        <td>{{empleado.apePer}}</td>
+                        <td>{{empleado.celPer}}</td>
+                        <td>{{empleado.corPer}}</td>
+                        <td>{{empleado.dniPer}}</td>
+                        <td>
+                            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+                                (click)="openEdit(empleado)"></button>
+                            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                                (click)="deleteEmpleado(empleado)"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+
+
+                <ng-template pTemplate="summary" >
+                    <ion-item class="ion-align-items-center ion-justify-content-center">
+                        <div class="flex align-items-center justify-content-between">
+                            Total de datos {{empleados ? empleados.length : 0 }} empleados.
+                        </div>
+                    </ion-item>
+                </ng-template>
+
+            </p-table>
+
+
+            <!--    Form Agregar y Editar Empleado       -->
+
+
+            <p-dialog [(visible)]="empleadoDialog" [style]="{width: '450px'}" header="Product Details" [modal]="true"
+                styleClass="p-fluid">
+                <ng-template pTemplate="content">
+                    <div class="field">
+                        <label for="name">Nombre</label>
+                        <input type="text" pInputText id="name" [(ngModel)]="empleadoSelect.nomPer" required
+                            autofocus />
+                        <small class="p-error" *ngIf="submitted && !empleadoSelect.nomPer">Name is required.</small>
+                    </div>
+                    <div class="field">
+                        <label for="apellido">Apellido</label>
+                        <input type="text" pInputText id="apellido" [(ngModel)]="empleadoSelect.apePer" required
+                            autofocus />
+                        <small class="p-error" *ngIf="submitted && !empleadoSelect.apePer">Name is required.</small>
+                    </div>
+                    <div class="field">
+                        <label for="celular">Celular</label>
+                        <input type="text" pInputText id="celular" [(ngModel)]="empleadoSelect.celPer" required
+                            autofocus />
+                        <small class="p-error" *ngIf="submitted && !empleadoSelect.celPer">Celular is required.</small>
+                    </div>
+                    <div class="field">
+                        <label for="correo">Correo</label>
+                        <input type="text" pInputText id="correo" [(ngModel)]="empleadoSelect.corPer" required
+                            autofocus />
+                        <small class="p-error" *ngIf="submitted && !empleadoSelect.corPer">Name is required.</small>
+                    </div>
+                    <div class="field">
+                        <label for="dni">Dni</label>
+                        <input type="text" pInputText id="dni" [(ngModel)]="empleadoSelect.dniPer" required autofocus />
+                        <small class="p-error" *ngIf="submitted && !empleadoSelect.dniPer">Celular is required.</small>
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="footer">
+                    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
+                        (click)="hideDialog()"></button>
+                    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
+                        (click)="actualizarEmpleado(empleadoSelect)"></button>
+                </ng-template>
+            </p-dialog>
+
+        </div>
+
+
+        <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+
+    </ion-content>
+</ion-app>

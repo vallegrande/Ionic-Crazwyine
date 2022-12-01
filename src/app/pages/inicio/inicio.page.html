@@ -1,0 +1,25 @@
+<ion-app>
+  <ion-content>
+    <!--  HEADER -->
+    <div class="header">
+      <h1>Crazywine</h1>
+      <div class="avatar">
+        <ion-img src="assets/avatar/{{obtenerId()}}.jpg"></ion-img>
+      </div>
+    </div>
+
+    <!-- SEARCHBAR -->
+  <app-searchbar></app-searchbar>
+
+  <!-- CATEGORIA -->
+  <div class="categories">
+    <app-categoria *ngFor="let item of categorias" [item]="item"></app-categoria>
+  </div>
+
+  <!-- Productos -->
+  <h1 class="list-header">Productos</h1>
+  <div class="food-list">
+    <app-producto-card  *ngFor ="let producto of productos"  [item]="producto"></app-producto-card>
+  </div>
+  </ion-content>
+</ion-app>

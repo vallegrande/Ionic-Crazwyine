@@ -1,0 +1,33 @@
+
+<ion-app>
+
+<ion-content>
+  <h3 class="title" *ngIf="(cartItems).length">{{(cartItems).length}} Producto</h3>
+
+  <!-- CART ITEMS -->
+  <ion-list lines="none">
+    <ion-item-sliding *ngFor="let item of cartItems">
+      <ion-item>
+        <app-carrito-item [item]="item" (incrementar)="aumentar(item)" 
+        (decrementar)="decrementar(item)"></app-carrito-item>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option (click) ="removerItem(item)">
+          <ion-icon name="trash-outline" size="large" color='danger'></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <!-- EMPTY CART -->
+  <div class="empty-cart" *ngIf="!(cartItems).length">
+    <ion-icon name="cart-outline"></ion-icon>
+    <p>Tu carrito esta vacio</p>
+  </div>
+
+  
+
+</ion-content>
+
+</ion-app>

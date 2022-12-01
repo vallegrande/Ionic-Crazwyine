@@ -1,29 +1,57 @@
 <ion-app>
-  <ion-split-pane contentId="main-content">
-    <ion-menu contentId="main-content" type="overlay">
+    <ion-menu menuId="main-menu" contentId="main" *ngIf="isHome">
       <ion-content>
-        <ion-list id="inbox-list">
-          <ion-list-header>Inbox</ion-list-header>
-          <ion-note>hi@ionicframework.com</ion-note>
-
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
-            <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
-              <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
-              <ion-label>{{ p.title }}</ion-label>
-            </ion-item>
-          </ion-menu-toggle>
-        </ion-list>
-
-        <ion-list id="labels-list">
-          <ion-list-header>Labels</ion-list-header>
-
-          <ion-item *ngFor="let label of labels" lines="none">
-            <ion-icon slot="start" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
-            <ion-label>{{ label }}</ion-label>
+        <div class="menu-header-bg"></div>
+  
+        <div class="header-content">
+          <img src="assets/avatar/{{obtenerId()}}.jpg">
+          <ion-label>
+            <h2>{{obtenerNombre()}}</h2>
+            <p>{{obtenerCargo()}}</p>
+          </ion-label>
+        </div>
+  
+        <div class="action-button">
+          <ion-button>
+            <ion-icon slot="start" name="add"></ion-icon> Add Branch
+          </ion-button>
+        </div>
+  
+        <ion-list class="menu-items" lines="none">
+          <ion-item (click)="clickEvent(0)" *ngIf="esAdmin()">
+            <ion-icon  [ngClass]="{'active' : isActive[0]}" name="people-outline"></ion-icon>Clientes
           </ion-item>
+          <ion-item (click)="clickEvent(1)" routerLink="/empleado-list" *ngIf="esAdmin()">
+            <ion-icon [ngClass]="{'active' : isActive[1]}"  name="briefcase-outline"></ion-icon>Empleados
+          </ion-item>
+          <ion-item (click)="clickEvent(2)" *ngIf="esAdmin()">
+            <ion-icon [ngClass]="{'active' : isActive[2]}" name="storefront-outline"></ion-icon>Productos
+          </ion-item>
+          <ion-item (click)="clickEvent(3)" *ngIf="esAdmin()">
+            <ion-icon [ngClass]="{'active' : isActive[3]}" name="call-outline"></ion-icon>Proveedor
+          </ion-item>
+          <ion-item (click)="clickEvent(4)" *ngIf="esAdmin()">
+            <ion-icon [ngClass]="{'active' : isActive[4]}" name="receipt-outline"></ion-icon>Venta
+          </ion-item>
+          <ion-item (click)="clickEvent(5)" *ngIf="esAdmin()">
+            <ion-icon [ngClass]="{'active' : isActive[5]}" name="clipboard-outline"></ion-icon>Compra
+          </ion-item>
+
+
+          <ion-item (click)="clickEvent(7)" *ngIf="!esAdmin()" routerLink="/inicio">
+            <ion-icon [ngClass]="{'active' : isActive[7]}" name="storefront-outline"></ion-icon>Inicio
+          </ion-item>
+          <ion-item (click)="clickEvent(8)" *ngIf="!esAdmin()" routerLink="/carrito">
+            <ion-icon [ngClass]="{'active' : isActive[8]}" name="bag-outline"></ion-icon>Carrito
+          </ion-item>
+
+          <ion-item (click)="clickEvent(6)" >
+            <ion-icon [ngClass]="{'active' : isActive[6]}" name="log-in-outline"></ion-icon>Cerrar Session
+          </ion-item>
+  
         </ion-list>
+  
       </ion-content>
     </ion-menu>
-    <ion-router-outlet id="main-content"></ion-router-outlet>
-  </ion-split-pane>
-</ion-app>
+    <ion-router-outlet id="main"  (activate)='removerMenu()'> </ion-router-outlet>
+  </ion-app>
